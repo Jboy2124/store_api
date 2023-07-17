@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  profileId String   @id @default(uuid())
+  fname     String
+  lname     String?
+  gender    Gender?  @default(Male)
+  address   String?
+  email     String?
+  contactNo String?
+  user      User?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  userId    Int            @id @default(autoincrement())
+  profileId String         @unique
+  profile   Profile?       @relation(fields: [profileId], references: [profileId], onDelete: Cascade, onUpdate: Cascade)
+  username  String
+  password  String
+  trans     Transactions[]
+  cart      Cart[]
+  role      Role           @default(USER)
+}
+
+model Products {
+  prodId    Int        @id @default(autoincrement())
+  sku       String
+  brand     String
+  model     String
+  desc      String?
+  color     String?
+  rom       String?
+  ram       String?
+  status    ProdStatus @default(Active)
+  inventory Inventory?
+  cart      Cart[]
+  details   Details[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Inventory {
+  invId     Int       @id @default(autoincrement())
+  prodId    Int       @unique
+  prod      Products? @relation(fields: [prodId], references: [prodId], onUpdate: Cascade)
+  availQty  Int?      @default(0)
+  amount    Decimal?  @default(0.0) @db.Decimal(9, 2)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Transactions {
+  transId   Int       @id @default(autoincrement())
+  userId    Int
+  user      User?     @relation(fields: [userId], references: [userId], onUpdate: Cascade)
+  details   Details[]
+  createdAt DateTime  @default(now())
+}
+
+model Details {
+  detailId  Int           @id @default(autoincrement())
+  transId   Int?
+  trans     Transactions? @relation(fields: [transId], references: [transId], onDelete: Cascade)
+  prodId    Int
+  prod      Products?     @relation(fields: [prodId], references: [prodId])
+  qty       Int?          @default(0)
+  price     Decimal?      @default(0.0) @db.Decimal(9, 2)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model Cart {
+  cartId Int       @id @default(autoincrement())
+  userId Int
+  user   User?     @relation(fields: [userId], references: [userId], onUpdate: Cascade)
+  count  Int
+  prodId Int
+  prod   Products? @relation(fields: [prodId], references: [prodId], onUpdate: Cascade)
+}
+
+enum Gender {
+  Male
+  Female
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ProdStatus {
+  Active
+  Inactive
+}
