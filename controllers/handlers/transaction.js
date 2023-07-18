@@ -10,7 +10,7 @@ module.exports = {
       const schema = Joi.object({
         userId: Joi.number().positive().required(),
         obj: Joi.array().items({
-          prodId: Joi.number().positive().required(),
+          prodId: Joi.string().required(),
           qty: Joi.number().positive().required(),
           price: Joi.number().positive().precision(2).required(),
         }),

@@ -35,7 +35,7 @@ model User {
 }
 
 model Products {
-  prodId    Int        @id @default(autoincrement())
+  prodId    String     @id @default(uuid())
   sku       String
   brand     String
   model     String
@@ -53,8 +53,8 @@ model Products {
 
 model Inventory {
   invId     Int       @id @default(autoincrement())
-  prodId    Int       @unique
-  prod      Products? @relation(fields: [prodId], references: [prodId], onUpdate: Cascade)
+  prodId    String    @unique
+  prod      Products? @relation(fields: [prodId], references: [prodId], onUpdate: Cascade, onDelete: Cascade)
   availQty  Int?      @default(0)
   amount    Decimal?  @default(0.0) @db.Decimal(9, 2)
   createdAt DateTime  @default(now())
@@ -73,8 +73,8 @@ model Details {
   detailId  Int           @id @default(autoincrement())
   transId   Int?
   trans     Transactions? @relation(fields: [transId], references: [transId], onDelete: Cascade)
-  prodId    Int
-  prod      Products?     @relation(fields: [prodId], references: [prodId])
+  prodId    String
+  prod      Products?     @relation(fields: [prodId], references: [prodId], onDelete: Cascade)
   qty       Int?          @default(0)
   price     Decimal?      @default(0.0) @db.Decimal(9, 2)
   createdAt DateTime      @default(now())
@@ -86,7 +86,7 @@ model Cart {
   userId Int
   user   User?     @relation(fields: [userId], references: [userId], onUpdate: Cascade)
   count  Int
-  prodId Int
+  prodId String
   prod   Products? @relation(fields: [prodId], references: [prodId], onUpdate: Cascade)
 }
 
