@@ -24,7 +24,7 @@ module.exports = {
           });
 
           return {
-            userId: result[0]?.userId,
+            profId: profile.profileId,
             user: profile.fname,
             email: profile.email,
             token: await sign({ profileId: result[0]?.profileId }),

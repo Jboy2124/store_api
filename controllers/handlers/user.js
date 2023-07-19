@@ -17,13 +17,10 @@ module.exports = {
       const response = await User.auth(data);
 
       if (!response.message) {
-        req.session.response;
-        req.session.authorized = true;
-
         res.cookie("_access-token", response.token, cookieSettings);
 
         res.json({
-          id: response.userId,
+          id: response.profId,
           user: response.user,
           email: response.email,
         });

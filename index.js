@@ -10,7 +10,8 @@ const { routes } = require("./routes/handler/route-handler");
 const corsOptions = require("./config/cors/cors-origin");
 const configSession = require("./config/session/session-config");
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors({ origin: "*", credentials: true }))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(configSession);
