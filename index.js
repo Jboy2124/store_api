@@ -7,10 +7,12 @@ const app = express();
 
 const { routes } = require("./routes/handler/route-handler");
 const corsOptions = require("./config/cors/origin/cors-origin");
+const configSession = require("./config/session/session-config");
 
 app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(configSession);
 
 //routes
 app.use(routes());

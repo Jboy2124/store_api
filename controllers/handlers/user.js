@@ -15,7 +15,19 @@ module.exports = {
       const data = await schema.validateAsync(req.body);
       const response = await User.auth(data);
 
-      res.json(response);
+      if (!response.message) {
+        req.session.response;
+        req.session.authorized = true;
+        res.json(response);
+      } else res.json(response);
+    } catch (error) {
+      res.json(error.message);
+    }
+  },
+
+  logout: (req, res) => {
+    try {
+      req.session.destroy();
     } catch (error) {
       res.json(error.message);
     }
