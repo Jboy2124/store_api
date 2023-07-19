@@ -11,7 +11,7 @@ module.exports = {
 
       jwt.verify(token, process.env.JWT_ACCESS_TOKEN_KEY, (error, decoded) => {
         if (error)
-          return res.status(403).json("Invalid Token, Forbidden Access!");
+          return res.status(403).json("Forbidden Access!");
 
         next();
       });
