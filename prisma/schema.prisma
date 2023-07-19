@@ -32,6 +32,8 @@ model User {
   trans     Transactions[]
   cart      Cart[]
   role      Role           @default(USER)
+
+  @@unique([username])
 }
 
 model Products {

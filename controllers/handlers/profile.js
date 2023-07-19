@@ -16,7 +16,7 @@ module.exports = {
         address: Joi.string().max(50).allow("").optional(),
         email: Joi.string().email({ tlds: true }).allow("").optional(),
         contactNo: Joi.string().max(15).allow("").optional(),
-        username: Joi.string().alphanum().min(4).max(20).required(),
+        username: Joi.string().email({ tlds: true }).required(),
         password: Joi.string().alphanum().min(6).max(20).required(),
       });
 
