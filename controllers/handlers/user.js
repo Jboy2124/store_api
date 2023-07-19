@@ -3,6 +3,7 @@ const Joi = require("joi");
 
 //controllers
 const User = require("../../models/user");
+const { cookieSettings } = require("../../config/cookie/cookie-parser");
 
 module.exports = {
   login: async (req, res) => {
@@ -18,7 +19,14 @@ module.exports = {
       if (!response.message) {
         req.session.response;
         req.session.authorized = true;
-        res.json(response);
+
+        res.cookie("_access-token", response.token, cookieSettings);
+
+        res.json({
+          id: response.userId,
+          user: response.user,
+          email: response.email,
+        });
       } else res.json(response);
     } catch (error) {
       res.json(error.message);
