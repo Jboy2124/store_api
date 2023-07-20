@@ -3,6 +3,27 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 module.exports = {
+  list: async () => {
+    try {
+      const result = await prisma.products.findMany({
+        where: {
+          status: "Active",
+        },
+        include: {
+          inventory: {
+            select: {
+              amount: true,
+              availQty: true,
+            },
+          },
+        },
+      });
+      return result;
+    } catch (error) {
+      return { error: error.message };
+    }
+  },
+
   store: async (payload) => {
     const { sku, brand, model, desc, color, rom, ram } = payload;
     try {

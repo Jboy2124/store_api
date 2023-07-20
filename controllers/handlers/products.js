@@ -5,6 +5,15 @@ const Joi = require("joi");
 const Product = require("../../models/products");
 
 module.exports = {
+  get: async (req, res) => {
+    try {
+      const response = await Product.list();
+      res.json(response);
+    } catch (error) {
+      res.json(error.message);
+    }
+  },
+
   post: async (req, res) => {
     try {
       const schema = Joi.object({
@@ -22,7 +31,6 @@ module.exports = {
 
       if (!response.error) res.json({ id: response.prodId });
       else res.json(response);
-      
     } catch (error) {
       res.json(error.message);
     }

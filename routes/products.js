@@ -6,8 +6,9 @@ const router = express.Router();
 const { auth } = require("../controllers/middlewares/jwt");
 
 //controllers
-const { post } = require("../controllers/handlers/products");
+const { post, get } = require("../controllers/handlers/products");
 
 module.exports = router
   //endpoints
-  .post("/product/new", auth, post);
+  .post("/product/new", auth, post)
+  .get("/products", get);

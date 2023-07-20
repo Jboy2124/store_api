@@ -1,4 +1,4 @@
-const whitelist = ["http://localhost:80001"];
+const whitelist = ["http://localhost:8001"];
 
 const corsOptions = {
   origin: (origin, cb) => {

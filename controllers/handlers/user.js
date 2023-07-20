@@ -1,13 +1,13 @@
 //libraries
 const { PrismaClient } = require("@prisma/client");
 const Joi = require("joi");
+
 const { verify } = require("../../utils/bcrypt");
 const { sign } = require("../../utils/jwt");
 const prisma = new PrismaClient();
 
 //controllers
 const User = require("../../models/user");
-const { cookieSettings } = require("../../config/cookie/cookie-parser");
 
 module.exports = {
   login: async (req, res) => {
@@ -28,7 +28,12 @@ module.exports = {
             res.cookie(
               "_access-token",
               await sign({ profile: response[0]?.profileId }),
-              cookieSettings
+              {
+                secure: true,
+                httpOnly: true,
+                sameSite: "strict",
+                maxAge: 15 * 60 * 60 * 1000,
+              }
             );
 
             const result = await prisma.profile.findUnique({

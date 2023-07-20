@@ -8,6 +8,7 @@ const Profile = require("../../models/profile");
 
 module.exports = {
   post: async (req, res) => {
+ 
     try {
       const schema = Joi.object({
         fname: Joi.string().max(25).required(),
@@ -17,7 +18,7 @@ module.exports = {
         email: Joi.string().email({ tlds: true }).allow("").optional(),
         contactNo: Joi.string().max(15).allow("").optional(),
         username: Joi.string().email({ tlds: true }).required(),
-        password: Joi.string().alphanum().min(6).max(20).required(),
+        password: Joi.string().alphanum().max(20).required(),
       });
 
       const data = await schema.validateAsync(req.body);
