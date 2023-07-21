@@ -26,10 +26,10 @@ module.exports = {
 
           if (isMatch) {
             res.cookie(
-              "_access-token",
+              "accessToken",
               await sign({ profile: response[0]?.profileId }),
               {
-                secure: true,
+                secure: false,
                 httpOnly: true,
                 sameSite: "strict",
                 maxAge: 15 * 60 * 60 * 1000,
@@ -46,6 +46,7 @@ module.exports = {
               id: result.profileId,
               user: result.fname,
               email: result.email,
+              role: response[0]?.role,
             });
           } else {
             res.json({ message: "Invalid password!" });
