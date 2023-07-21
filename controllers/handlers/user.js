@@ -29,7 +29,7 @@ module.exports = {
               "accessToken",
               await sign({ profile: response[0]?.profileId }),
               {
-                secure: false,
+                secure: true,
                 httpOnly: true,
                 sameSite: "strict",
                 maxAge: 15 * 60 * 60 * 1000,
