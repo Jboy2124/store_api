@@ -31,6 +31,6 @@
     6. To the terminal, make sure that you are inside to your folder, type `npx prisma migrate dev --name init` (this will initialize the model and will sync to your database/schema)
     7. npm run dev
 
-    Note: Just make sure you configure the `.env` file base on your own config or settings.
+    Note: Just make sure that you configure the `.env` file base on your own config or settings.
 
 ##
