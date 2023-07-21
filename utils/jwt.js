@@ -8,7 +8,7 @@ module.exports = {
         process.env.JWT_ACCESS_TOKEN_KEY,
         {
           algorithm: "HS384",
-          expiresIn: "1h",
+          expiresIn: "15m",
         }
       );
       return token;

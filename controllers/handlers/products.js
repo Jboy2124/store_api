@@ -1,5 +1,6 @@
 //libraries
 const Joi = require("joi");
+const sharp = require("sharp");
 
 //models
 const Product = require("../../models/products");
@@ -9,6 +10,19 @@ module.exports = {
     try {
       const response = await Product.list();
       res.json(response);
+    } catch (error) {
+      res.json(error.message);
+    }
+  },
+
+  postImage: async (req, res) => {
+    try {
+      await sharp(req.file.buffer)
+        .resize({ height: 330, width: 250 })
+        .png()
+        .toFile(`./assets/products/${req.file.originalname}`);
+
+      res.status(200).json({ message: "Successful" });
     } catch (error) {
       res.json(error.message);
     }

@@ -4,7 +4,7 @@ module.exports = {
   auth: (req, res, next) => {
     try {
       // const authHeader = req.headers["authorization" || "Authorization"];
-      const authHeader = req.headers.cookie
+      const authHeader = req.headers.cookie;
 
       if (!authHeader) return res.status(401).json("Unauthorized Request!");
 
