@@ -4,7 +4,7 @@ module.exports = {
   upload: () => {
     const mult = multer({
       limits: {
-        fileSize: 1000000, //1mbps
+        fileSize: 5000000, //5mb
       },
       fileFilter(req, file, cb) {
         if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
