@@ -38,6 +38,8 @@ module.exports = {
         color: Joi.string().max(15).allow("").optional(),
         rom: Joi.string().max(10).allow("").optional(),
         ram: Joi.string().max(10).allow("").optional(),
+        // qty: Joi.number().positive().allow("").optional(),
+        // price: Joi.number().positive().allow("").optional(),
       });
 
       const data = await schema.validateAsync(req.body);

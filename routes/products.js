@@ -12,6 +12,6 @@ const { post, get, postImage } = require("../controllers/handlers/products");
 
 module.exports = router
   //endpoints
-  .post("/product/new", auth, post)
+  .post("/product/new", post)
   .post("/product/image", auth, upload().single("prodImage"), postImage)
   .get("/products", get);

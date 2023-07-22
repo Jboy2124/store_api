@@ -25,7 +25,17 @@ module.exports = {
   },
 
   store: async (payload) => {
-    const { sku, brand, model, desc, color, rom, ram } = payload;
+    const {
+      sku,
+      brand,
+      model,
+      desc,
+      color,
+      rom,
+      ram,
+      // qty,
+      // price,
+    } = payload;
     try {
       const result = await prisma.products.create({
         data: {
@@ -39,7 +49,7 @@ module.exports = {
           inventory: {
             create: {
               availQty: 0,
-              amount: 0.0,
+              amount: 0.00,
             },
           },
         },
