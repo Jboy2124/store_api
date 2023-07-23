@@ -17,18 +17,20 @@ module.exports = {
     }
   },
 
-  // postImage: async (req, res) => {
-  //   try {
-  //     await sharp(req.file.buffer)
-  //       .resize({ height: 330, width: 250 })
-  //       .png()
-  //       .toFile(`./assets/products/${req.file.originalname}`);
+  getImage: (req, res) => {
+    try {
+      const imageName = req.params.id;
+      if (imageName !== undefined) {
+        const dir = "d:\\projects\\back\\store_api\\";
 
-  //     res.status(200).json({ message: "Successful" });
-  //   } catch (error) {
-  //     res.json(error.message);
-  //   }
-  // },
+        const imagePath = path.join(dir, "/assets/products/", imageName);
+
+        res.sendFile(imagePath);
+      }
+    } catch (error) {
+      res.json(error.message);
+    }
+  },
 
   post: async (req, res) => {
     const { filename: prodImage } = req.file;
@@ -52,6 +54,7 @@ module.exports = {
       const data = await schema.validateAsync(req.body);
       const response = await Product.store(
         data,
+        // req.file.filename
         `assets/products/${req.file.filename}`
       );
 
