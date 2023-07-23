@@ -12,7 +12,8 @@ module.exports = {
         }
         cb(undefined, true);
       },
-    });
+    }).single("prodImage");
+
     return mult;
   },
 };

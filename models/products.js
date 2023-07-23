@@ -24,7 +24,7 @@ module.exports = {
     }
   },
 
-  store: async (payload) => {
+  store: async (payload, img) => {
     const {
       sku,
       brand,
@@ -46,10 +46,11 @@ module.exports = {
           color: color,
           rom: rom,
           ram: ram,
+          image: img,
           inventory: {
             create: {
               availQty: 0,
-              amount: 0.00,
+              amount: 0.0,
             },
           },
         },

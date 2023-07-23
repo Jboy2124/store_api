@@ -5,7 +5,7 @@ const corsOptions = {
     if (whitelist.indexOf(origin) !== -1) {
       cb(null, true);
     } else {
-      cb("Not allowed by CORS. Origin not in the whitelist.");
+      cb("Bad Request. Blocked by CORS.");
     }
   },
   credentials: true,
