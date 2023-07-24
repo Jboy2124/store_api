@@ -24,6 +24,7 @@ app.use(configSession);
 //routes
 app.use(routes());
 
+//statics
 app.use("/assets/products", express.static("./assets/products"));
 
 app.listen(port, () => {

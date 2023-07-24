@@ -13,4 +13,4 @@ module.exports = router
   //endpoints
   .post("/product/new", image(), post)
   .get("/product/image/:id", getImage)
-  .get("/products", auth, get);
+  .get("/products", get);
