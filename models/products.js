@@ -48,6 +48,7 @@ module.exports = {
         where: {
           feature: 1,
         },
+        take: 4,
       });
 
       return result;
