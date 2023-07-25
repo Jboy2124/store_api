@@ -1,7 +1,6 @@
 const multer = require("multer");
 const destPath = "./assets";
 const path = require("path");
-// const sharp = require("sharp");
 
 module.exports = {
   image: () => {

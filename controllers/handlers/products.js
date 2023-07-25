@@ -19,6 +19,16 @@ module.exports = {
     }
   },
 
+  getFeatProd: async (req, res) => {
+    const feature = req.params.id;
+    try {
+      const response = await Product.feature(feature);
+      res.json(response);
+    } catch (error) {
+      res.json(error.message);
+    }
+  },
+
   getTotal: async (req, res) => {
     try {
       const response = await Product.count();
@@ -60,7 +70,7 @@ module.exports = {
 
       await sharp(req.file.path)
         .resize({ height: 330, width: 270 })
-        .jpeg({ quality: 90 })
+        .png()
         .toFile(path.resolve(req.file.destination, "products", prodImage));
       fs.unlinkSync(req.file.path);
 

@@ -42,6 +42,20 @@ module.exports = {
     }
   },
 
+  feature: async (id) => {
+    try {
+      const result = await prisma.products.findMany({
+        where: {
+          feature: 1,
+        },
+      });
+
+      return result;
+    } catch (error) {
+      return { error: error.message };
+    }
+  },
+
   store: async (payload, img) => {
     const { sku, brand, model, desc, color, rom, ram, qty, price } = payload;
     try {

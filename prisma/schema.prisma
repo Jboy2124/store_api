@@ -46,6 +46,7 @@ model Products {
   rom       String?
   ram       String?
   image     String?
+  feature   Int        @default(0)
   status    ProdStatus @default(Active)
   inventory Inventory?
   cart      Cart[]
