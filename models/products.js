@@ -28,6 +28,24 @@ module.exports = {
     }
   },
 
+  count: async () => {
+    const limit = 8;
+    let total = 0;
+    try {
+      const result = await prisma.products.count({
+        where: {
+          status: "Active",
+        },
+      });
+
+      total = Math.ceil(Number(result) / Number(limit));
+
+      return total;
+    } catch (error) {
+      return { error: error.message };
+    }
+  },
+
   productById: async (id) => {
     try {
       const result = await prisma.products.findUnique({
@@ -44,20 +62,6 @@ module.exports = {
       });
 
       return result;
-    } catch (error) {
-      return { error: error.message };
-    }
-  },
-
-  count: async () => {
-    try {
-      const total = await prisma.products.count({
-        where: {
-          status: "Active",
-        },
-      });
-
-      return total;
     } catch (error) {
       return { error: error.message };
     }

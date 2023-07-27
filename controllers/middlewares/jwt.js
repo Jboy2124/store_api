@@ -19,4 +19,22 @@ module.exports = {
       return error.message;
     }
   },
+
+  productToken: (req, res, next) => {
+    try {
+      const tokenHeader = req.headers.cookie;
+
+      if (!tokenHeader) return res.status(401).json("Unauthorized");
+
+      const token = tokenHeader.split("=")[1];
+
+      jwt.verify(token, process.env.PRODUCT_ACCESS_TOKEN_KEY, (err, decode) => {
+        if (err) return res.status(403).json("Forbidden");
+
+        next();
+      });
+    } catch (error) {
+      return error.message;
+    }
+  },
 };

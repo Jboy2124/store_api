@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 //middlewares
-const { auth } = require("../controllers/middlewares/jwt");
+const { auth, productToken } = require("../controllers/middlewares/jwt");
 const { image } = require("../controllers/middlewares/multer");
 
 //controllers
@@ -23,4 +23,4 @@ module.exports = router
   .get("/products/feature/:id", getFeatProd)
   .get("/product/prodId=:id", getProductById)
   .get("/products/total", getTotal)
-  .get("/products", get);
+  .get("/products", productToken, get);
