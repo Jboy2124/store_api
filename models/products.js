@@ -28,6 +28,27 @@ module.exports = {
     }
   },
 
+  productById: async (id) => {
+    try {
+      const result = await prisma.products.findUnique({
+        where: {
+          prodId: id,
+        },
+        include: {
+          inventory: {
+            select: {
+              amount: true,
+            },
+          },
+        },
+      });
+
+      return result;
+    } catch (error) {
+      return { error: error.message };
+    }
+  },
+
   count: async () => {
     try {
       const total = await prisma.products.count({

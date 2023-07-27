@@ -19,6 +19,16 @@ module.exports = {
     }
   },
 
+  getProductById: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const response = await Product.productById(id);
+      res.json(response);
+    } catch (error) {
+      res.json(error.message);
+    }
+  },
+
   getFeatProd: async (req, res) => {
     const feature = req.params.id;
     try {
