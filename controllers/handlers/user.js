@@ -44,9 +44,11 @@ module.exports = {
 
             res.json({
               id: result.profileId,
+              userId: response[0]?.userId,
               user: result.fname,
               email: result.email,
               role: response[0]?.role,
+              cart: response[0]?.cart,
             });
           } else {
             res.json({ message: "Invalid password!" });

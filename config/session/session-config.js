@@ -1,13 +1,13 @@
 const session = require("express-session");
 
 const configSession = session({
-  name: "_session-id",
+  name: "session-id",
   secret: process.env.SESSION_ACCESS_KEY,
   resave: false,
   saveUninitialized: false,
   cookie: {
     sameSite: "strict",
-    secure: false, //change to true when production
+    secure: true, //change to true when production
     httpOnly: true,
   },
 });

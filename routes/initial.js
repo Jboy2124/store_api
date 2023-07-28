@@ -5,6 +5,8 @@ const router = express.Router();
 //middlewares
 
 //controllers
-const { initial } = require("../controllers/handlers/initial");
+const { initial, publicToken } = require("../controllers/handlers/initial");
 
-module.exports = router.get("/initial/loading", initial);
+module.exports = router
+  .get("/initial/loading", initial)
+  .get("/session/public/access", publicToken);

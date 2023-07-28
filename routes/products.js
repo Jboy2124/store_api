@@ -23,4 +23,4 @@ module.exports = router
   .get("/products/feature/:id", getFeatProd)
   .get("/product/prodId=:id", getProductById)
   .get("/products/total", getTotal)
-  .get("/products", productToken, get);
+  .get("/products", get);

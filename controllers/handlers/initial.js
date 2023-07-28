@@ -15,4 +15,12 @@ module.exports = {
       res.json(error.message);
     }
   },
+
+  publicToken: (req, res) => {
+    try {
+      res.json({ message: "Public Access Granted" });
+    } catch (error) {
+      res.json(error.message);
+    }
+  },
 };

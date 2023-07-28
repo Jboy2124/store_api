@@ -3,13 +3,16 @@ const Joi = require("joi");
 const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
+const session = require("express-session");
 
 //models
 const Product = require("../../models/products");
+const configSession = require("../../config/session/session-config");
 
 module.exports = {
   get: async (req, res) => {
     const pageNo = req.query.page;
+
     // console.log(req.query.page); //to get the params/query page number
     try {
       const response = await Product.list(pageNo);

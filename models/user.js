@@ -9,6 +9,17 @@ module.exports = {
         where: {
           username: email,
         },
+        include: {
+          cart: {
+            select: {
+              prodId: true,
+              count: true,
+            },
+            where: {
+              status: "OnHold",
+            },
+          },
+        },
       });
 
       return result;
