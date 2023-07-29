@@ -16,8 +16,8 @@ module.exports = {
       const result = await prisma.cart.upsert({
         where: {
           prodId_userId: {
-            prodId: prodId,
             userId: userId,
+            prodId: prodId,
           },
         },
         update: {

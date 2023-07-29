@@ -86,8 +86,8 @@ model Details {
 }
 
 model Cart {
-  prodId    String     
-  userId    Int        
+  prodId    String
+  userId    Int
   user      User?      @relation(fields: [userId], references: [userId], onUpdate: Cascade)
   count     Int
   prod      Products?  @relation(fields: [prodId], references: [prodId], onUpdate: Cascade)
@@ -96,7 +96,6 @@ model Cart {
   updatedAt DateTime   @updatedAt
 
   @@id([prodId, userId])
-  @@index([prodId, userId])
 }
 
 enum Gender {
