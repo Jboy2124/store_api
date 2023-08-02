@@ -22,6 +22,15 @@ module.exports = {
     }
   },
 
+  // getListById: async (req, res) => {
+  //   try {
+  //     const response = await Product.listByProdId(req.body);
+  //     res.json(response);
+  //   } catch (error) {
+  //     res.json(error.message);
+  //   }
+  // },
+
   getProductById: async (req, res) => {
     const { id } = req.params;
     try {
@@ -61,6 +70,21 @@ module.exports = {
 
         res.sendFile(imagePath);
       }
+    } catch (error) {
+      res.json(error.message);
+    }
+  },
+
+  postList: async (req, res) => {
+    try {
+      const schema = Joi.object({
+        userId: Joi.number().positive().required(),
+        prodId: Joi.array().items(Joi.string().required()),
+      });
+
+      const data = await schema.validateAsync(req.body);
+      const response = await Product.listByProdId(data);
+      res.json(response);
     } catch (error) {
       res.json(error.message);
     }

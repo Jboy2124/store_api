@@ -11,8 +11,8 @@ module.exports = {
         where: {
           status: "Active",
         },
-        skip: (page - 1) * 8,
-        take: 8,
+        skip: (page - 1) * 12,
+        take: 12,
         include: {
           inventory: {
             select: {
@@ -28,8 +28,40 @@ module.exports = {
     }
   },
 
+  listByProdId: async (payload) => {
+    const { userId, prodId } = payload;
+    try {
+      const result = await prisma.products.findMany({
+        where: {
+          prodId: {
+            in: prodId,
+          },
+        },
+        include: {
+          inventory: {
+            select: {
+              amount: true,
+            },
+          },
+          cart: {
+            where: {
+              userId: Number(userId),
+            },
+            select: {
+              count: true,
+            },
+          },
+        },
+      });
+
+      return result;
+    } catch (error) {
+      return { error: error.message };
+    }
+  },
+
   count: async () => {
-    const limit = 8;
+    const limit = 12;
     let total = 0;
     try {
       const result = await prisma.products.count({

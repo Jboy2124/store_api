@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 //controllers
-const { post } = require("../controllers/handlers/cart");
+const { post, patch } = require("../controllers/handlers/cart");
 
 module.exports = router
   //endpoints
-  .post("/product/cart/", post);
+  .post("/product/cart/", post)
+  .patch("/product/cart/update", patch);

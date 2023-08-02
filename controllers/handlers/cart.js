@@ -2,7 +2,7 @@
 const Joi = require("joi");
 
 //models
-const { store } = require("../../models/cart");
+const { store, updateStatus } = require("../../models/cart");
 
 module.exports = {
   post: async (req, res) => {
@@ -16,6 +16,16 @@ module.exports = {
 
       const data = await schema.validateAsync(req.body);
       const response = await store(data);
+      res.json(response);
+    } catch (error) {
+      res.json(error.message);
+    }
+  },
+
+  patch: async (req, res) => {
+    try {
+      const { userId, prodId } = req.query;
+      const response = await updateStatus({ userId, prodId });
       res.json(response);
     } catch (error) {
       res.json(error.message);

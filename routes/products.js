@@ -9,6 +9,7 @@ const { image } = require("../controllers/middlewares/multer");
 //controllers
 const {
   post,
+  postList,
   get,
   getImage,
   getTotal,
@@ -19,8 +20,10 @@ const {
 module.exports = router
   //endpoints
   .post("/product/new", image(), post)
+  .post("/product/list/includes", postList)
   .get("/product/image/:id", getImage)
   .get("/products/feature/:id", getFeatProd)
   .get("/product/prodId=:id", getProductById)
   .get("/products/total", getTotal)
+
   .get("/products", get);
