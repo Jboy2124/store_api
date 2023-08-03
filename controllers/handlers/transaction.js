@@ -13,6 +13,7 @@ module.exports = {
           prodId: Joi.string().required(),
           qty: Joi.number().positive().required(),
           price: Joi.number().positive().precision(2).required(),
+          shipping: Joi.number().positive().precision(2).required(),
         }),
       });
 

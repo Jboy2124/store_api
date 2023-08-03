@@ -37,7 +37,7 @@ model User {
 }
 
 model Products {
-  prodId    String     @id @default(uuid())
+  prodId    String      @id @default(uuid())
   sku       String
   brand     String
   model     String
@@ -46,21 +46,21 @@ model Products {
   rom       String?
   ram       String?
   image     String?
-  feature   Int        @default(0)
-  status    ProdStatus @default(Active)
-  inventory Inventory?
+  feature   Int         @default(0)
+  status    ProdStatus  @default(Active)
+  inventory Inventory[]
   cart      Cart[]
   details   Details[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 model Inventory {
   invId     Int       @id @default(autoincrement())
-  prodId    String    @unique
+  prodId    String
   prod      Products? @relation(fields: [prodId], references: [prodId], onUpdate: Cascade, onDelete: Cascade)
   availQty  Int?      @default(0)
-  amount    Decimal?  @default(0.0) @db.Decimal(9, 2)
+  amount    Float?    @default(0)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -76,26 +76,27 @@ model Transactions {
 model Details {
   detailId  Int           @id @default(autoincrement())
   transId   Int?
-  trans     Transactions? @relation(fields: [transId], references: [transId], onDelete: Cascade)
+  trans     Transactions? @relation(fields: [transId], references: [transId], onDelete: Cascade, onUpdate: Cascade)
   prodId    String
-  prod      Products?     @relation(fields: [prodId], references: [prodId], onDelete: Cascade)
+  prod      Products?     @relation(fields: [prodId], references: [prodId], onDelete: Cascade, onUpdate: Cascade)
   qty       Int?          @default(0)
-  price     Decimal?      @default(0.0) @db.Decimal(9, 2)
+  price     Float?        @default(0)
+  shipping  Float?        @default(0)
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
 }
 
 model Cart {
+  cartId    Int       @id @default(autoincrement())
   prodId    String
   userId    Int
-  user      User?      @relation(fields: [userId], references: [userId], onUpdate: Cascade)
+  user      User?     @relation(fields: [userId], references: [userId])
   count     Int
-  prod      Products?  @relation(fields: [prodId], references: [prodId], onUpdate: Cascade)
-  status    CartStatus @default(OnHold)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  prod      Products? @relation(fields: [prodId], references: [prodId])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
-  @@id([prodId, userId])
+  @@unique([cartId])
 }
 
 enum Gender {
@@ -111,10 +112,4 @@ enum Role {
 enum ProdStatus {
   Active
   Inactive
-}
-
-enum CartStatus {
-  OnHold
-  Rejected
-  Purchased
 }

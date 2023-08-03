@@ -40,6 +40,7 @@ module.exports = {
         include: {
           inventory: {
             select: {
+              availQty: true,
               amount: true,
             },
           },

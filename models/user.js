@@ -15,9 +15,6 @@ module.exports = {
               prodId: true,
               count: true,
             },
-            where: {
-              status: "OnHold",
-            },
           },
         },
       });

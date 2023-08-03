@@ -19,7 +19,7 @@ const {
 
 module.exports = router
   //endpoints
-  .post("/product/new", image(), post)
+  .post("/product/new", auth, image(), post)
   .post("/product/list/includes", postList)
   .get("/product/image/:id", getImage)
   .get("/products/feature/:id", getFeatProd)
