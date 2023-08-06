@@ -22,16 +22,6 @@ module.exports = {
     }
   },
 
-  patch: async (req, res) => {
-    try {
-      const { userId, prodId } = req.query;
-      const response = await updateStatus({ userId, prodId });
-      res.json(response);
-    } catch (error) {
-      res.json(error.message);
-    }
-  },
-
   del: async (req, res) => {
     try {
       const schema = Joi.object({

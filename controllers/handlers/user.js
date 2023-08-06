@@ -1,13 +1,15 @@
 //libraries
 const { PrismaClient } = require("@prisma/client");
 const Joi = require("joi");
+const crypto = require("crypto");
 
 const { verify } = require("../../utils/bcrypt");
 const { sign } = require("../../utils/jwt");
 const prisma = new PrismaClient();
 
-//controllers
+//models
 const User = require("../../models/user");
+const Token = require("../../models/token");
 
 module.exports = {
   login: async (req, res) => {
@@ -25,14 +27,18 @@ module.exports = {
           const isMatch = await verify(data.password, response[0]?.password);
 
           if (isMatch) {
+            const accessTokenRenewKey = crypto.randomUUID();
             res.cookie(
               "accessToken",
-              await sign({ profile: response[0]?.profileId }),
+              await sign({
+                profile: response[0]?.profileId,
+                renew: accessTokenRenewKey,
+              }),
               {
                 secure: true,
                 httpOnly: true,
                 sameSite: "strict",
-                maxAge: 15 * 60 * 60 * 1000,
+                // maxAge: 15 * 60 * 60 * 1000,
               }
             );
 
@@ -40,6 +46,11 @@ module.exports = {
               where: {
                 profileId: response[0]?.profileId,
               },
+            });
+
+            await Token.store({
+              userId: response[0].userId,
+              token: accessTokenRenewKey,
             });
 
             res.json({
@@ -64,9 +75,17 @@ module.exports = {
     }
   },
 
-  logout: (req, res) => {
+  logout: async (req, res) => {
     try {
-      req.session.destroy();
+      res
+        .clearCookie("accessToken", {
+          secure: true,
+          httpOnly: true,
+          sameSite: "strict",
+        })
+        .send("token cleared");
+
+      await Token.remove();
     } catch (error) {
       res.json(error.message);
     }

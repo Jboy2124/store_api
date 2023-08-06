@@ -9,5 +9,5 @@ const { post, del } = require("../controllers/handlers/cart");
 
 module.exports = router
   //endpoints
-  .post("/product/cart/", post)
-  .delete("/product/cart/delete", del);
+  .post("/product/cart/", auth, post)
+  .delete("/product/cart/delete", auth, del);

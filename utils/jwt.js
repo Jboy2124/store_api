@@ -8,7 +8,7 @@ module.exports = {
         process.env.JWT_ACCESS_TOKEN_KEY,
         {
           algorithm: "HS384",
-          expiresIn: "15m",
+          expiresIn: "20s",
         }
       );
       return token;
@@ -17,16 +17,16 @@ module.exports = {
     }
   },
 
-  productSign: (payload) => {
+  createRefreshToken: (payload) => {
     try {
       const token = jwt.sign(
         {
           data: payload,
         },
-        process.env.PRODUCT_ACCESS_TOKEN_KEY,
+        process.env.JWT_REFRESH_TOKEN_KEY,
         {
           algorithm: "HS384",
-          expiresIn: "15m",
+          expiresIn: "10m",
         }
       );
       return token;

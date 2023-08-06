@@ -31,9 +31,18 @@ model User {
   password  String
   trans     Transactions[]
   cart      Cart[]
+  token     Token[]
   role      Role           @default(USER)
 
   @@unique([username])
+}
+
+model Token {
+  tokenId      Int      @id @unique @default(autoincrement())
+  refreshToken String
+  userId       Int?
+  user         User?    @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade)
+  createdAt    DateTime @default(now())
 }
 
 model Products {
