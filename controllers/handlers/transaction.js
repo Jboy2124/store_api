@@ -9,6 +9,7 @@ module.exports = {
     try {
       const schema = Joi.object({
         userId: Joi.number().positive().required(),
+        modeOfPayment: Joi.string().min(3).max(10).required(),
         obj: Joi.array().items({
           prodId: Joi.string().required(),
           qty: Joi.number().positive().required(),

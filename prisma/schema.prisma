@@ -76,6 +76,7 @@ model Inventory {
 
 model Transactions {
   transId   Int       @id @default(autoincrement())
+  mode      String?
   userId    Int
   user      User?     @relation(fields: [userId], references: [userId], onUpdate: Cascade)
   details   Details[]
